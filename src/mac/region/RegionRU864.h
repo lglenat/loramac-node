@@ -200,6 +200,11 @@ extern "C"
 #define RU864_BEACON_CHANNEL_FREQ                   869100000
 
 /*!
+ * Ping slot channel frequency
+ */
+#define RU864_PING_SLOT_CHANNEL_FREQ                868900000
+
+/*!
  * Payload size of a beacon frame
  */
 #define RU864_BEACON_SIZE                           17
@@ -225,15 +230,20 @@ extern "C"
 #define RU864_BEACON_CHANNEL_BW                     0
 
 /*!
+ * Datarate of the ping slot channel
+ */
+#define RU864_PING_SLOT_CHANNEL_DR                  DR_3
+
+/*!
  * Maximum number of bands
  */
 #define RU864_MAX_NB_BANDS                          1
 
 /*!
  * Band 0 definition
- * { DutyCycle, TxMaxPower, LastJoinTxDoneTime, LastTxDoneTime, TimeOff }
+ * Band = { DutyCycle, TxMaxPower, LastBandUpdateTime, TimeCredits, MaxTimeCredits, ReadyForTransmission }
  */
-#define RU864_BAND0                                 { 100 , RU864_MAX_TX_POWER, 0, 0, 0 } //  1.0 %
+#define RU864_BAND0                                 { 100 , RU864_MAX_TX_POWER, 0, 0, 0, 0 } //  1.0 %
 
 /*!
  * LoRaMac default channel 1
@@ -264,14 +274,9 @@ static const uint8_t DataratesRU864[]  = { 12, 11, 10,  9,  8,  7, 7, 50 };
 static const uint32_t BandwidthsRU864[] = { 125000, 125000, 125000, 125000, 125000, 125000, 250000, 0 };
 
 /*!
- * Maximum payload with respect to the datarate index. Cannot operate with repeater.
+ * Maximum payload with respect to the datarate index.
  */
 static const uint8_t MaxPayloadOfDatarateRU864[] = { 51, 51, 51, 115, 242, 242, 242, 242 };
-
-/*!
- * Maximum payload with respect to the datarate index. Can operate with repeater.
- */
-static const uint8_t MaxPayloadOfDatarateRepeaterRU864[] = { 51, 51, 51, 115, 222, 222, 222, 222 };
 
 /*!
  * \brief The function gets a value of a specific phy attribute.
@@ -427,13 +432,6 @@ uint8_t RegionRU864DlChannelReq( DlChannelReqParams_t* dlChannelReq );
  * \retval Datarate to apply.
  */
 int8_t RegionRU864AlternateDr( int8_t currentDr, AlternateDrType_t type );
-
-/*!
- * \brief Calculates the back-off time.
- *
- * \param [IN] calcBackOff Pointer to the function parameters.
- */
-void RegionRU864CalcBackOff( CalcBackOffParams_t* calcBackOff );
 
 /*!
  * \brief Searches and set the next random available channel

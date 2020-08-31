@@ -167,11 +167,6 @@ typedef enum eKeyIdentifier
      */
     APP_KEY = 0,
     /*!
-     * Application root key
-     * Used to derive McRootKey for 1.0.x devices
-     */
-    GEN_APP_KEY,
-    /*!
      * Network root key
      */
     NWK_KEY,
@@ -332,6 +327,11 @@ typedef union uMcRxParams
 typedef struct sMcChannelParams
 {
     /*!
+     * Indicate if the multicast channel is being setup remotely or locally.
+     * Indicates which set of keys are to be used. \ref uMcKeys
+     */
+    bool IsRemotelySetup;
+    /*!
      * Multicats channel LoRaWAN class B or C
      */
     DeviceClass_t Class;
@@ -348,9 +348,30 @@ typedef struct sMcChannelParams
      */
     uint32_t Address;
     /*!
-     * Encrypted multicast key
+     * Multicast keys
      */
-    uint8_t *McKeyE;
+    union uMcKeys
+    {
+        /*!
+         * Encrypted multicast key - Used when IsRemotelySetup equals `true`.
+         * MC_KEY is decrypted and then the session keys ar derived.
+         */
+        uint8_t *McKeyE;
+        /*!
+         * Multicast Session keys - Used when IsRemotelySetup equals `false`
+         */
+        struct
+        {
+            /*!
+             * Multicast application session key
+             */
+            uint8_t *McAppSKey;
+            /*!
+             * Multicast network session key
+             */
+            uint8_t *McNwkSKey;
+        }Session;
+    }McKeys;
     /*!
      * Minimum multicast frame counter value
      */
@@ -571,17 +592,24 @@ typedef struct sBand
      */
     int8_t TxMaxPower;
     /*!
-     * Time stamp of the last JoinReq Tx frame.
+     * The last time the band has been
+     * synchronized with the current time
      */
-    TimerTime_t LastJoinTxDoneTime;
+    TimerTime_t LastBandUpdateTime;
     /*!
-     * Time stamp of the last Tx frame
+     * Current time credits which are available. This
+     * is a value in ms
      */
-    TimerTime_t LastTxDoneTime;
+    TimerTime_t TimeCredits;
     /*!
-     * Holds the time where the device is off
+     * Maximum time credits which are available. This
+     * is a value in ms
      */
-    TimerTime_t TimeOff;
+    TimerTime_t MaxTimeCredits;
+    /*!
+     * Set to true when the band is ready for use.
+     */
+    bool ReadyForTransmission;
 }Band_t;
 
 /*!

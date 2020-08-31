@@ -193,6 +193,11 @@ extern "C"
 #define CN470_BEACON_CHANNEL_STEPWIDTH              200000
 
 /*!
+ * Ping slot channel frequency
+ */
+#define CN470_PING_SLOT_CHANNEL_FREQ                508300000
+
+/*!
  * Number of possible beacon channels
  */
 #define CN470_BEACON_NB_CHANNELS                    8
@@ -234,9 +239,9 @@ extern "C"
 
 /*!
  * Band 0 definition
- * { DutyCycle, TxMaxPower, LastJoinTxDoneTime, LastTxDoneTime, TimeOff }
+ * Band = { DutyCycle, TxMaxPower, LastBandUpdateTime, TimeCredits, MaxTimeCredits, ReadyForTransmission }
  */
-#define CN470_BAND0                                 { 1, CN470_MAX_TX_POWER, 0, 0, 0 } //  100.0 %
+#define CN470_BAND0                                 { 1, CN470_MAX_TX_POWER, 0, 0, 0, 0 } //  100.0 %
 
 /*!
  * Defines the first channel for RX window 1 for CN470 band
@@ -264,14 +269,9 @@ static const uint8_t DataratesCN470[]  = { 12, 11, 10,  9,  8,  7 };
 static const uint32_t BandwidthsCN470[] = { 125000, 125000, 125000, 125000, 125000, 125000 };
 
 /*!
- * Maximum payload with respect to the datarate index. Cannot operate with repeater.
+ * Maximum payload with respect to the datarate index.
  */
 static const uint8_t MaxPayloadOfDatarateCN470[] = { 51, 51, 51, 115, 242, 242 };
-
-/*!
- * Maximum payload with respect to the datarate index. Can operate with repeater.
- */
-static const uint8_t MaxPayloadOfDatarateRepeaterCN470[] = { 51, 51, 51, 115, 222, 222 };
 
 /*!
  * \brief The function gets a value of a specific phy attribute.
@@ -427,13 +427,6 @@ uint8_t RegionCN470DlChannelReq( DlChannelReqParams_t* dlChannelReq );
  * \retval Datarate to apply.
  */
 int8_t RegionCN470AlternateDr( int8_t currentDr, AlternateDrType_t type );
-
-/*!
- * \brief Calculates the back-off time.
- *
- * \param [IN] calcBackOff Pointer to the function parameters.
- */
-void RegionCN470CalcBackOff( CalcBackOffParams_t* calcBackOff );
 
 /*!
  * \brief Searches and set the next random available channel

@@ -137,7 +137,7 @@ extern "C"
 /*!
  * Enabled or disabled the duty cycle
  */
-#define IN865_DUTY_CYCLE_ENABLED                    1
+#define IN865_DUTY_CYCLE_ENABLED                    0
 
 /*!
  * Maximum RX window duration
@@ -202,6 +202,11 @@ extern "C"
 #define IN865_BEACON_CHANNEL_FREQ                   866550000
 
 /*!
+ * Ping slot channel frequency
+ */
+#define IN865_PING_SLOT_CHANNEL_FREQ                866550000
+
+/*!
  * Payload size of a beacon frame
  */
 #define IN865_BEACON_SIZE                           19
@@ -238,9 +243,9 @@ extern "C"
 
 /*!
  * Band 0 definition
- * { DutyCycle, TxMaxPower, LastJoinTxDoneTime, LastTxDoneTime, TimeOff }
+ * Band = { DutyCycle, TxMaxPower, LastBandUpdateTime, TimeCredits, MaxTimeCredits, ReadyForTransmission }
  */
-#define IN865_BAND0                                 { 1 , IN865_MAX_TX_POWER, 0, 0, 0 } //  100.0 %
+#define IN865_BAND0                                 { 1 , IN865_MAX_TX_POWER, 0, 0, 0, 0 } //  100.0 %
 
 /*!
  * LoRaMac default channel 1
@@ -276,14 +281,9 @@ static const uint8_t DataratesIN865[]  = { 12, 11, 10,  9,  8,  7,  7, 50 };
 static const uint32_t BandwidthsIN865[] = { 125000, 125000, 125000, 125000, 125000, 125000, 250000, 0 };
 
 /*!
- * Maximum payload with respect to the datarate index. Cannot operate with repeater.
+ * Maximum payload with respect to the datarate index.
  */
 static const uint8_t MaxPayloadOfDatarateIN865[] = { 51, 51, 51, 115, 242, 242, 242, 242 };
-
-/*!
- * Maximum payload with respect to the datarate index. Can operate with repeater.
- */
-static const uint8_t MaxPayloadOfDatarateRepeaterIN865[] = { 51, 51, 51, 115, 222, 222, 222, 222 };
 
 /*!
  * Effective datarate offsets for receive window 1.
@@ -444,13 +444,6 @@ uint8_t RegionIN865DlChannelReq( DlChannelReqParams_t* dlChannelReq );
  * \retval Datarate to apply.
  */
 int8_t RegionIN865AlternateDr( int8_t currentDr, AlternateDrType_t type );
-
-/*!
- * \brief Calculates the back-off time.
- *
- * \param [IN] calcBackOff Pointer to the function parameters.
- */
-void RegionIN865CalcBackOff( CalcBackOffParams_t* calcBackOff );
 
 /*!
  * \brief Searches and set the next random available channel

@@ -45,6 +45,30 @@ extern "C"
 #include "region/Region.h"
 
 /*!
+ * Channel plan group AS923-1
+ * AS923_FREQ_OFFSET = 0
+ */
+#define CHANNEL_PLAN_GROUP_AS923_1                  1
+
+/*!
+ * Channel plan group AS923-2
+ * AS923_FREQ_OFFSET = -1.8MHz
+ */
+#define CHANNEL_PLAN_GROUP_AS923_2                  2
+
+/*!
+ * Channel plan group AS923-3
+ * AS923_FREQ_OFFSET = -6.6MHz
+ */
+#define CHANNEL_PLAN_GROUP_AS923_3                  3
+
+/*!
+ * Channel plan group AS923-1 for Japan
+ * AS923_FREQ_OFFSET = 0
+ */
+#define CHANNEL_PLAN_GROUP_AS923_1_JP               4
+
+/*!
  * LoRaMac maximum number of channels
  */
 #define AS923_MAX_NB_CHANNELS                       16
@@ -218,6 +242,11 @@ extern "C"
 #define AS923_BEACON_CHANNEL_FREQ                   923400000
 
 /*!
+ * Ping slot channel frequency
+ */
+#define AS923_PING_SLOT_CHANNEL_FREQ                923400000
+
+/*!
  * Payload size of a beacon frame
  */
 #define AS923_BEACON_SIZE                           17
@@ -254,9 +283,9 @@ extern "C"
 
 /*!
  * Band 0 definition
- * { DutyCycle, TxMaxPower, LastJoinTxDoneTime, LastTxDoneTime, TimeOff }
+ * Band = { DutyCycle, TxMaxPower, LastBandUpdateTime, TimeCredits, MaxTimeCredits, ReadyForTransmission }
  */
-#define AS923_BAND0                                 { 100, AS923_MAX_TX_POWER, 0, 0, 0 } //  1.0 %
+#define AS923_BAND0                                 { 100, AS923_MAX_TX_POWER, 0, 0, 0, 0 } //  1.0 %
 
 /*!
  * LoRaMac default channel 1
@@ -278,12 +307,12 @@ extern "C"
 /*!
  * RSSI threshold for a free channel [dBm]
  */
-#define AS923_RSSI_FREE_TH                          -85
+#define AS923_RSSI_FREE_TH                          -80
 
 /*!
  * Specifies the time the node performs a carrier sense
  */
-#define AS923_CARRIER_SENSE_TIME                    6
+#define AS923_CARRIER_SENSE_TIME                    5
 
 /*!
  * Data rates table definition
@@ -296,27 +325,20 @@ static const uint8_t DataratesAS923[]  = { 12, 11, 10,  9,  8,  7, 7, 50 };
 static const uint32_t BandwidthsAS923[] = { 125000, 125000, 125000, 125000, 125000, 125000, 250000, 0 };
 
 /*!
- * Maximum payload with respect to the datarate index. Cannot operate with repeater.
+ * Maximum payload with respect to the datarate index.
  * The table is valid for the dwell time configuration of 0 for uplinks and downlinks.
  */
 static const uint8_t MaxPayloadOfDatarateDwell0AS923[] = { 51, 51, 51, 115, 242, 242, 242, 242 };
 
 /*!
- * Maximum payload with respect to the datarate index. Can operate with repeater.
- * The table is valid for the dwell time configuration of 0 for uplinks and downlinks. The table provides
- * repeater support.
- */
-static const uint8_t MaxPayloadOfDatarateRepeaterDwell0AS923[] = { 51, 51, 51, 115, 222, 222, 222, 222 };
-
-/*!
- * Maximum payload with respect to the datarate index. Can operate with and without repeater.
- * The table proides repeater support. The table is only valid for uplinks.
+ * Maximum payload with respect to the datarate index.
+ * The table is only valid for uplinks.
  */
 static const uint8_t MaxPayloadOfDatarateDwell1UpAS923[] = { 0, 0, 11, 53, 125, 242, 242, 242 };
 
 /*!
- * Maximum payload with respect to the datarate index. Can operate with and without repeater.
- * The table proides repeater support. The table is only valid for downlinks.
+ * Maximum payload with respect to the datarate index.
+ * The table is only valid for downlinks.
  */
 static const uint8_t MaxPayloadOfDatarateDwell1DownAS923[] = { 0, 0, 11, 53, 126, 242, 242, 242 };
 
@@ -479,13 +501,6 @@ uint8_t RegionAS923DlChannelReq( DlChannelReqParams_t* dlChannelReq );
  * \retval Datarate to apply.
  */
 int8_t RegionAS923AlternateDr( int8_t currentDr, AlternateDrType_t type );
-
-/*!
- * \brief Calculates the back-off time.
- *
- * \param [IN] calcBackOff Pointer to the function parameters.
- */
-void RegionAS923CalcBackOff( CalcBackOffParams_t* calcBackOff );
 
 /*!
  * \brief Searches and set the next random available channel
