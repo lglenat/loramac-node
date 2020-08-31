@@ -6,6 +6,9 @@ zephyr_library_include_directories(../src/boards)
 zephyr_library_include_directories(../src/mac)
 zephyr_library_include_directories(../src/radio)
 zephyr_library_include_directories(../src/system)
+zephyr_library_include_directories(../src/radio/lr1110)
+zephyr_library_include_directories(../src/radio/lr1110/lr1110_driver)
+zephyr_library_include_directories(../src/radio/lr1110/lr1110_driver/src)
 
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LORAMAC ../src/mac/LoRaMacAdr.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LORAMAC ../src/mac/LoRaMac.c)
@@ -24,6 +27,16 @@ zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_SX1276 ../src/radio/sx1276/sx127
 
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_SX126X ../src/radio/sx126x/sx126x.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_SX126X ../src/radio/sx126x/radio.c)
+
+zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/radio.c)
+zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_bootloader.c)
+zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_crypto_engine.c)
+zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_driver_version.c)
+zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_gnss.c)
+zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_radio.c)
+zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_regmem.c)
+zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_system.c)
+zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_wifi.c)
 
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LORAMAC ../src/system/timer.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LORAMAC ../src/system/delay.c)
