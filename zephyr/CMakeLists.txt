@@ -49,14 +49,14 @@ zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LORAMAC ../src/boards/mcu/utilit
 
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LORAMAC ../src/mac/region/Region.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LORAMAC ../src/mac/region/RegionCommon.c)
-zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_EU868 ../src/mac/region/RegionEU868.c)
-zephyr_library_compile_definitions_ifdef(CONFIG_LORAMAC_REGION_EU868 REGION_EU868="ON")
-zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_US915 ../src/mac/region/RegionUS915.c)
-zephyr_library_compile_definitions_ifdef(CONFIG_LORAMAC_REGION_US915 REGION_US915="ON")
+zephyr_library_sources_ifdef(CONFIG_HAS_LORAMAC_REGION_EU868 ../src/mac/region/RegionEU868.c)
+zephyr_library_compile_definitions_ifdef(CONFIG_HAS_LORAMAC_REGION_EU868 REGION_EU868="ON")
+zephyr_library_sources_ifdef(CONFIG_HAS_LORAMAC_REGION_US915 ../src/mac/region/RegionUS915.c)
+zephyr_library_compile_definitions_ifdef(CONFIG_HAS_LORAMAC_REGION_US915 REGION_US915="ON")
 
 zephyr_library_compile_definitions_ifdef(CONFIG_HAS_LORAMAC_ACTIVE_REGION_US915 ACTIVE_REGION="LORAMAC_REGION_EU868")
 
-zephyr_library_compile_definitions_ifdef(CONFIG_LR1110_SECURE_ELEMENT SECURE_ELEMENT_PRE_PROVISIONED="ON")
-zephyr_library_compile_definitions_ifdef(CONFIG_LR1110_SECURE_ELEMENT SECURE_ELEMENT="LR1110_SE")
+zephyr_library_compile_definitions_ifdef(CONFIG_HAS_LR1110_SECURE_ELEMENT SECURE_ELEMENT_PRE_PROVISIONED="ON")
+zephyr_library_compile_definitions_ifdef(CONFIG_HAS_LR1110_SECURE_ELEMENT SECURE_ELEMENT="LR1110_SE")
 
 endif()
