@@ -60,4 +60,8 @@ zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_KR920 ../src/mac/region/Regio
 zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_IN865 ../src/mac/region/RegionIN865.c)
 zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_RU864 ../src/mac/region/RegionRU864.c)
 
+# Allow selection of secure-element provisioning method
+option(SECURE_ELEMENT_PRE_PROVISIONED "Secure-element pre-provisioning" ON)
+option(SECURE_ELEMENT "Secure-element type" LR1110_SE)
+
 endif()
