@@ -50,18 +50,13 @@ zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LORAMAC ../src/boards/mcu/utilit
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LORAMAC ../src/mac/region/Region.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LORAMAC ../src/mac/region/RegionCommon.c)
 zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_EU868 ../src/mac/region/RegionEU868.c)
+zephyr_library_compile_definitions_ifdef(CONFIG_LORAMAC_REGION_EU868 REGION_EU868="ON")
 zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_US915 ../src/mac/region/RegionUS915.c)
-zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_CN779 ../src/mac/region/RegionCN779.c)
-zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_EU433 ../src/mac/region/RegionEU433.c)
-zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_AU915 ../src/mac/region/RegionAU915.c)
-zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_AS923 ../src/mac/region/RegionAS923.c)
-zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_CN470 ../src/mac/region/RegionCN470.c)
-zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_KR920 ../src/mac/region/RegionKR920.c)
-zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_IN865 ../src/mac/region/RegionIN865.c)
-zephyr_library_sources_ifdef(CONFIG_LORAMAC_REGION_RU864 ../src/mac/region/RegionRU864.c)
+zephyr_library_compile_definitions_ifdef(CONFIG_LORAMAC_REGION_US915 REGION_US915="ON")
 
-# Allow selection of secure-element provisioning method
-option(SECURE_ELEMENT_PRE_PROVISIONED "Secure-element pre-provisioning" ON)
-option(SECURE_ELEMENT "Secure-element type" LR1110_SE)
+zephyr_library_compile_definitions_ifdef(CONFIG_HAS_LORAMAC_ACTIVE_REGION_US915 ACTIVE_REGION="LORAMAC_REGION_EU868")
+
+zephyr_library_compile_definitions_ifdef(CONFIG_LR1110_SECURE_ELEMENT SECURE_ELEMENT_PRE_PROVISIONED="ON")
+zephyr_library_compile_definitions_ifdef(CONFIG_LR1110_SECURE_ELEMENT SECURE_ELEMENT="LR1110_SE")
 
 endif()
