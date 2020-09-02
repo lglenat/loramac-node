@@ -31,15 +31,19 @@ zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_SX126X ../src/radio/sx126x/radio
 
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/radio.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_bootloader.c)
-zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_crypto_engine.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_driver_version.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_gnss.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_radio.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_regmem.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_system.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/radio/lr1110/lr1110_driver/src/lr1110_wifi.c)
-zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/peripherals/lr1110-se/lr1110-se.c)
-zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LR1110 ../src/peripherals/lr1110-se/lr1110-se-hal.c)
+
+zephyr_library_sources_ifdef(CONFIG_HAS_LR1110_SECURE_ELEMENT ../src/radio/lr1110/lr1110_driver/src/lr1110_crypto_engine.c)
+zephyr_library_sources_ifdef(CONFIG_HAS_LR1110_SECURE_ELEMENT ../src/peripherals/lr1110-se/lr1110-se.c)
+zephyr_library_sources_ifdef(CONFIG_HAS_LR1110_SECURE_ELEMENT ../src/peripherals/lr1110-se/lr1110-se-hal.c)
+
+zephyr_library_sources_ifdef(CONFIG_HAS_LR1110_SOFT_SE ../src/peripherals/soft-se.c)
+zephyr_library_sources_ifdef(CONFIG_HAS_LR1110_SOFT_SE ../src/peripherals/soft-se-hal.c)
 
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LORAMAC ../src/system/timer.c)
 zephyr_library_sources_ifdef(CONFIG_HAS_SEMTECH_LORAMAC ../src/system/delay.c)
@@ -58,5 +62,7 @@ zephyr_library_compile_definitions_ifdef(CONFIG_HAS_LORAMAC_ACTIVE_REGION_US915 
 
 zephyr_library_compile_definitions_ifdef(CONFIG_HAS_LR1110_SECURE_ELEMENT SECURE_ELEMENT_PRE_PROVISIONED="ON")
 zephyr_library_compile_definitions_ifdef(CONFIG_HAS_LR1110_SECURE_ELEMENT SECURE_ELEMENT="LR1110_SE")
+
+zephyr_library_compile_definitions_ifdef(CONFIG_HAS_LR1110_SOFT_SE SECURE_ELEMENT="LR1110_SE")
 
 endif()
